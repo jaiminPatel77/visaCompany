@@ -1,0 +1,31 @@
+<header class="company-hero">
+  <div class="hero-band"></div>
+
+  <div class="container hero-content">
+    <div class="logo-card" [class.initials-mode]="!logoUrl() || logoFailed()">
+      @if (logoUrl() && !logoFailed()) {
+        <img
+          [src]="logoUrl()"
+          [alt]="company() + ' logo'"
+          class="logo-img"
+          referrerpolicy="no-referrer"
+          (error)="onLogoError()"
+        />
+      } @else {
+        <div class="initials-avatar" [attr.aria-label]="company()">
+          {{ initials() }}
+        </div>
+      }
+    </div>
+
+    <div class="company-meta">
+      <h1 class="company-name">{{ company() }}</h1>
+      <div class="pills-row">
+        <span class="pill country-pill">{{ country() }}</span>
+        @if (hasValidLocation()) {
+          <span class="pill location-pill">{{ location() }}</span>
+        }
+      </div>
+    </div>
+  </div>
+</header>

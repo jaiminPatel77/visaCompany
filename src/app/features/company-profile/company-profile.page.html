@@ -1,0 +1,52 @@
+@switch (state().status) {
+  @case ('loading') {
+    <app-loading-skeleton />
+  }
+
+  @case ('notFound') {
+    <app-not-found />
+  }
+
+  @case ('duplicate') {
+    <app-not-found
+      [title]="'Profile Temporarily Unavailable'"
+      [message]="'This profile is temporarily unavailable.'"
+    />
+  }
+
+  @case ('error') {
+    <app-error-state
+      [message]="state().errorMessage || 'Unable to connect to service. Please check your connection and try again.'"
+      (retry)="onRetry()"
+    />
+  }
+
+  @case ('loaded') {
+    @if (state().data; as profile) {
+      <div class="profile-layout fade-in">
+        <app-company-header
+          [company]="profile.company"
+          [country]="profile.country"
+          [location]="profile.location"
+          [logo]="profile.logo"
+        />
+
+        <main class="container profile-main" id="main-content">
+          <app-text-section
+            [title]="'Company Details'"
+            [rawText]="profile.companyDetails"
+          />
+
+          <app-text-section
+            [title]="'Job Details'"
+            [rawText]="profile.jobDetails"
+          />
+
+          <app-company-gallery [images]="profile.images" />
+
+          <app-company-videos [videos]="profile.videos" />
+        </main>
+      </div>
+    }
+  }
+}

@@ -1,0 +1,42 @@
+@if (hasContent()) {
+  <section class="profile-card text-section fade-in" [attr.aria-label]="title()">
+    <div class="card-header">
+      <div class="accent-bar" aria-hidden="true"></div>
+      <h2 class="section-title">{{ title() }}</h2>
+    </div>
+
+    <div class="blocks-container">
+      @for (block of blocks(); track $index) {
+        @switch (block.type) {
+          @case ('subheading') {
+            <h3 class="subheading">{{ block.text }}</h3>
+          }
+          @case ('paragraph') {
+            <p class="paragraph">
+              @for (line of block.lines; track $index; let last = $last) {
+                <span>{{ line }}</span>
+                @if (!last) {
+                  <br />
+                }
+              }
+            </p>
+          }
+          @case ('bullet-list') {
+            <ul class="bullet-list">
+              @for (item of block.items; track $index) {
+                <li class="list-item">{{ item }}</li>
+              }
+            </ul>
+          }
+          @case ('numbered-list') {
+            <ol class="numbered-list">
+              @for (item of block.items; track $index) {
+                <li class="list-item">{{ item }}</li>
+              }
+            </ol>
+          }
+        }
+      }
+    </div>
+  </section>
+}

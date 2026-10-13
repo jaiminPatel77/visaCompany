@@ -1,0 +1,16 @@
+.profile-layout {
+  width: 100%;
+  min-height: 100vh;
+  padding-bottom: 4rem;
+}
+
+.container {
+  max-width: var(--container-max-width);
+  margin: 0 auto;
+  padding: 0 1.25rem;
+}
+
+.profile-main {
+  display: flex;
+  flex-direction: column;
+}

@@ -1,0 +1,65 @@
+<div
+  class="lightbox-backdrop"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Image lightbox"
+  (click)="onClose()"
+  (touchstart)="onTouchStart($event)"
+  (touchend)="onTouchEnd($event)"
+>
+  <div class="lightbox-dialog" (click)="$event.stopPropagation()">
+    <header class="lightbox-topbar">
+      <div class="counter">{{ counterText() }}</div>
+      <button
+        #closeButton
+        type="button"
+        class="lightbox-btn close-btn"
+        aria-label="Close lightbox"
+        (click)="onClose()"
+      >
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </header>
+
+    <div class="lightbox-stage">
+      @if (images().length > 1) {
+        <button
+          type="button"
+          class="lightbox-btn nav-btn prev-btn"
+          aria-label="Previous image"
+          (click)="prev()"
+        >
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        </button>
+      }
+
+      <div class="image-wrapper">
+        <img
+          [src]="currentImageUrl()"
+          [alt]="currentImage().name || 'Company gallery image'"
+          class="lightbox-image"
+          referrerpolicy="no-referrer"
+          (error)="onImageError()"
+        />
+      </div>
+
+      @if (images().length > 1) {
+        <button
+          type="button"
+          class="lightbox-btn nav-btn next-btn"
+          aria-label="Next image"
+          (click)="next()"
+        >
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </button>
+      }
+    </div>
+  </div>
+</div>

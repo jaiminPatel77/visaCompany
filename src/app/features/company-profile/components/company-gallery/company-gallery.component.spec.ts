@@ -46,4 +46,21 @@ describe('CompanyGalleryComponent', () => {
     const section = fixture.nativeElement.querySelector('.gallery-section');
     expect(section).toBeNull();
   });
+
+  it('should add few-images class when images count is 1 or 2', () => {
+    const grid = fixture.nativeElement.querySelector('.gallery-grid');
+    expect(grid.classList.contains('few-images')).toBeTrue();
+  });
+
+  it('should not add few-images class when images count is 3 or more', () => {
+    host.images.set([
+      { id: '1', name: 'a.jpg' },
+      { id: '2', name: 'b.jpg' },
+      { id: '3', name: 'c.jpg' },
+    ]);
+    fixture.detectChanges();
+
+    const grid = fixture.nativeElement.querySelector('.gallery-grid');
+    expect(grid.classList.contains('few-images')).toBeFalse();
+  });
 });

@@ -36,6 +36,10 @@ export class CompanyGalleryComponent {
     return this.visibleImages().length > 0;
   });
 
+  protected readonly isFewImages = computed<boolean>(() => {
+    return this.visibleImages().length <= 2;
+  });
+
   getImageUrl(id: string): string {
     if (this.retriedIds().has(id)) {
       return getDriveFallbackThumbnailUrl(id, 800);

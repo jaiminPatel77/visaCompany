@@ -42,4 +42,27 @@ describe('CompanyVideosComponent', () => {
     const section = fixture.nativeElement.querySelector('.videos-section');
     expect(section).toBeNull();
   });
+
+  it('should render featured video and no additional videos container when only one video is present', () => {
+    const featured = fixture.nativeElement.querySelector('.featured-video-wrapper');
+    expect(featured).toBeTruthy();
+
+    const additional = fixture.nativeElement.querySelector('.additional-videos-container');
+    expect(additional).toBeNull();
+  });
+
+  it('should render additional videos in grid when more than one video is present', () => {
+    host.videos.set([
+      { source: 'youtube', id: 'video1', name: 'First' },
+      { source: 'youtube', id: 'video2', name: 'Second' },
+      { source: 'drive', id: '1ABC_xyz-12345', name: 'Third' },
+    ]);
+    fixture.detectChanges();
+
+    const additional = fixture.nativeElement.querySelector('.additional-videos-container');
+    expect(additional).toBeTruthy();
+
+    const cards = fixture.nativeElement.querySelectorAll('.additional-videos-grid app-video-card');
+    expect(cards.length).toBe(2);
+  });
 });

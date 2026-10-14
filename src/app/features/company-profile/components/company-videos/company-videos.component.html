@@ -1,14 +1,25 @@
-@if (hasVideos()) {
+@if (hasVideos() && featuredVideo(); as featured) {
   <section class="profile-card videos-section fade-in" aria-label="Company videos">
     <div class="card-header">
       <div class="accent-bar" aria-hidden="true"></div>
-      <h2 class="section-title">Company Videos</h2>
+      <h2 class="section-title">{{ sectionTitle() }}</h2>
     </div>
 
-    <div class="videos-grid">
-      @for (video of videos(); track (video.source + '-' + video.id); let i = $index) {
-        <app-video-card [video]="video" [index]="i" />
-      }
+    <!-- Featured Video (First Video) -->
+    <div class="featured-video-wrapper">
+      <app-video-card [video]="featured" [index]="0" [isFeatured]="true" />
     </div>
+
+    <!-- Additional Videos Grid (if any) -->
+    @if (additionalVideos().length > 0) {
+      <div class="additional-videos-container">
+        <h3 class="additional-heading">More Videos</h3>
+        <div class="additional-videos-grid">
+          @for (video of additionalVideos(); track (video.source + '-' + video.id); let i = $index) {
+            <app-video-card [video]="video" [index]="i + 1" [isFeatured]="false" />
+          }
+        </div>
+      </div>
+    }
   </section>
 }

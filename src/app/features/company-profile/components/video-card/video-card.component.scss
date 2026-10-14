@@ -1,8 +1,29 @@
 .video-card-item {
   width: 100%;
-  max-width: 560px;
   display: flex;
   flex-direction: column;
+
+  &.is-featured {
+    max-width: 880px;
+    margin: 0 auto;
+
+    .play-btn-circle {
+      width: 72px;
+      height: 72px;
+
+      .play-icon {
+        width: 26px;
+        height: 26px;
+        margin-left: 4px;
+      }
+    }
+
+    .video-title {
+      font-size: 16px;
+      font-weight: 600;
+      margin-top: 10px;
+    }
+  }
 }
 
 .poster-card {
@@ -64,8 +85,8 @@
 }
 
 .play-btn-circle {
-  width: 56px;
-  height: 56px;
+  width: 54px;
+  height: 54px;
   border-radius: 50%;
   background-color: #ffffff;
   box-shadow: 0 4px 14px rgba(11, 37, 69, 0.25);
@@ -80,7 +101,7 @@
 }
 
 .play-icon {
-  margin-left: 3px; // Optical balance for play triangle
+  margin-left: 3px;
 }
 
 .video-meta {

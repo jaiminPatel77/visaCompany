@@ -5,7 +5,7 @@
       <h2 class="section-title">Company Gallery</h2>
     </div>
 
-    <div class="gallery-grid">
+    <div class="gallery-grid" [class.few-images]="isFewImages()">
       @for (image of visibleImages(); track image.id; let i = $index) {
         <button
           type="button"

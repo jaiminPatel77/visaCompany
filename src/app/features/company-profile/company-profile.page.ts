@@ -101,6 +101,19 @@ export class CompanyProfilePage {
     return !!(data && data.videos && data.videos.length > 0);
   });
 
+  protected readonly isBothShort = computed<boolean>(() => {
+    const data = this.state().data;
+    if (!data) return false;
+    const companyDetails = data.companyDetails?.trim() || '';
+    const jobDetails = data.jobDetails?.trim() || '';
+    if (!companyDetails || !jobDetails) return false;
+
+    const isCompanyShort = companyDetails.length < 350 && companyDetails.split('\n').length <= 6;
+    const isJobShort = jobDetails.length < 350 && jobDetails.split('\n').length <= 6;
+
+    return isCompanyShort && isJobShort;
+  });
+
   constructor() {
     // Effect to update Document Title and Meta Description reactively
     effect(() => {

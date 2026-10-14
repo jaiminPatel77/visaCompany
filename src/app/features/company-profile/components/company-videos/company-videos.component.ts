@@ -14,7 +14,20 @@ export class CompanyVideosComponent {
   readonly videos = input<MediaVideo[]>([]);
 
   protected readonly hasVideos = computed<boolean>(() => {
+    return (this.videos()?.length ?? 0) > 0;
+  });
+
+  protected readonly featuredVideo = computed<MediaVideo | null>(() => {
     const list = this.videos();
-    return Boolean(list && list.length > 0);
+    return list && list.length > 0 ? list[0] : null;
+  });
+
+  protected readonly additionalVideos = computed<MediaVideo[]>(() => {
+    const list = this.videos();
+    return list && list.length > 1 ? list.slice(1) : [];
+  });
+
+  protected readonly sectionTitle = computed<string>(() => {
+    return (this.videos()?.length ?? 0) > 1 ? 'Company Videos' : 'Company Video';
   });
 }

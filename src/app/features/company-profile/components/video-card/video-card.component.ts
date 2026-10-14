@@ -30,6 +30,7 @@ export class VideoCardComponent implements OnDestroy {
 
   readonly video = input.required<MediaVideo>();
   readonly index = input<number>(0);
+  readonly isFeatured = input<boolean>(false);
 
   @ViewChild('closeBtn') private readonly closeBtnRef?: ElementRef<HTMLButtonElement>;
 

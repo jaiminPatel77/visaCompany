@@ -11,7 +11,9 @@
   }
 
   &.job-details-card {
-    border-top: 3px solid var(--color-accent, #1f6feb);
+    border-top: 3px solid #1f6feb;
+    border-radius: 14px;
+    overflow: hidden;
   }
 }
 

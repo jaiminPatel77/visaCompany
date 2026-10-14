@@ -1,37 +1,19 @@
 @if (hasVisibleImages()) {
-  <section class="profile-card gallery-section fade-in" aria-label="Company gallery">
-    <div class="card-header">
-      <div class="accent-bar" aria-hidden="true"></div>
-      <h2 class="section-title">Company Gallery</h2>
-    </div>
+<section class="profile-card gallery-section fade-in" aria-label="Company gallery">
 
-    <div class="gallery-grid" [class.few-images]="isFewImages()">
-      @for (image of visibleImages(); track image.id; let i = $index) {
-        <button
-          type="button"
-          class="gallery-tile"
-          [attr.aria-label]="'View image ' + (i + 1) + ': ' + (image.name || 'Company photo')"
-          (click)="openLightbox(i)"
-        >
-          <img
-            [src]="getImageUrl(image.id)"
-            [alt]="image.name || 'Company photo ' + (i + 1)"
-            class="tile-image"
-            loading="lazy"
-            decoding="async"
-            referrerpolicy="no-referrer"
-            (error)="onImageError(image.id)"
-          />
-        </button>
-      }
-    </div>
-  </section>
 
-  @if (lightboxOpen()) {
-    <app-lightbox
-      [images]="visibleImages()"
-      [initialIndex]="selectedIndex()"
-      (close)="closeLightbox()"
-    />
-  }
+  <div class="gallery-grid" [class.few-images]="isFewImages()">
+    @for (image of visibleImages(); track image.id; let i = $index) {
+    <button type="button" class="gallery-tile"
+      [attr.aria-label]="'View image ' + (i + 1) + ': ' + (image.name || 'Company photo')">
+      <img [src]="getImageUrl(image.id)" [alt]="image.name || 'Company photo ' + (i + 1)" class="tile-image"
+        loading="lazy" decoding="async" referrerpolicy="no-referrer" (error)="onImageError(image.id)" />
+    </button>
+    }
+  </div>
+</section>
+
+@if (lightboxOpen()) {
+<app-lightbox [images]="visibleImages()" [initialIndex]="selectedIndex()" (close)="closeLightbox()" />
+}
 }

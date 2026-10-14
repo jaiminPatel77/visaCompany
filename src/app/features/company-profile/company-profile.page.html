@@ -32,19 +32,28 @@
         />
 
         <main class="container profile-main" id="main-content">
-          <app-text-section
-            [title]="'Company Details'"
-            [rawText]="profile.companyDetails"
-          />
+          <div class="main-grid" [class.has-videos]="hasVideos()">
+            <div class="content-column">
+              <app-text-section
+                [title]="'Company Details'"
+                [rawText]="profile.companyDetails"
+              />
 
-          <app-text-section
-            [title]="'Job Details'"
-            [rawText]="profile.jobDetails"
-          />
+              <app-text-section
+                [title]="'Job Details'"
+                [rawText]="profile.jobDetails"
+                [isJobDetails]="true"
+              />
+            </div>
+
+            @if (hasVideos()) {
+              <aside class="sidebar-column">
+                <app-company-videos [videos]="profile.videos" />
+              </aside>
+            }
+          </div>
 
           <app-company-gallery [images]="profile.images" />
-
-          <app-company-videos [videos]="profile.videos" />
         </main>
       </div>
     }

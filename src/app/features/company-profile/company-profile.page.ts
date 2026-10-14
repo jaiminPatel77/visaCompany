@@ -10,7 +10,7 @@ import {
 import { Title, Meta } from '@angular/platform-browser';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { of } from 'rxjs';
-import { switchMap, tap } from 'rxjs/operators';
+import { switchMap } from 'rxjs/operators';
 import { CompanyService } from '../../core/services/company.service';
 import { ProfileState } from '../../core/models/profile.model';
 import { slugify } from '../../core/utils/slugify';
@@ -95,6 +95,11 @@ export class CompanyProfilePage {
       initialValue: INITIAL_PROFILE_STATE,
     }
   );
+
+  protected readonly hasVideos = computed<boolean>(() => {
+    const data = this.state().data;
+    return !!(data && data.videos && data.videos.length > 0);
+  });
 
   constructor() {
     // Effect to update Document Title and Meta Description reactively

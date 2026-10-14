@@ -1,5 +1,9 @@
 @if (hasContent()) {
-  <section class="profile-card text-section fade-in" [attr.aria-label]="title()">
+  <section
+    class="profile-card text-section fade-in"
+    [class.job-details-card]="isJobDetails() || title() === 'Job Details'"
+    [attr.aria-label]="title()"
+  >
     <div class="card-header">
       <div class="accent-bar" aria-hidden="true"></div>
       <h2 class="section-title">{{ title() }}</h2>

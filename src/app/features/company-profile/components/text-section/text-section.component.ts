@@ -11,6 +11,7 @@ import { parseTextBlocks, TextBlock } from '../../../../core/utils/text-blocks';
 export class TextSectionComponent {
   readonly title = input.required<string>();
   readonly rawText = input<string | null | undefined>('');
+  readonly isJobDetails = input<boolean>(false);
 
   protected readonly blocks = computed<TextBlock[]>(() => {
     return parseTextBlocks(this.rawText());

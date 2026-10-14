@@ -1,49 +1,81 @@
-<div class="video-container">
-  @if (!isPlaying()) {
-    <div class="poster-wrapper" (click)="play()">
-      @if (posterUrl() && !posterFailed()) {
-        <img
-          [src]="posterUrl()"
-          [alt]="videoTitle()"
-          class="poster-image"
-          loading="lazy"
-          decoding="async"
-          referrerpolicy="no-referrer"
-          (error)="onPosterError()"
-        />
-      } @else {
-        <div class="dark-placeholder">
-          <span class="placeholder-text">{{ videoTitle() }}</span>
-        </div>
-      }
-
-      <div class="poster-overlay">
-        <button
-          type="button"
-          class="play-button"
-          [attr.aria-label]="'Play video: ' + videoTitle()"
-          (click)="$event.stopPropagation(); play()"
-        >
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
-            <polygon points="5 3 19 12 5 21 5 3"></polygon>
-          </svg>
-        </button>
-      </div>
-
-      @if (video().name) {
-        <div class="video-label">{{ video().name }}</div>
-      }
-    </div>
-  } @else {
-    @if (safePlayerUrl()) {
-      <iframe
-        [src]="safePlayerUrl()"
-        class="video-iframe"
-        allow="autoplay; encrypted-media; fullscreen"
-        allowfullscreen
+<div class="video-card-item">
+  <div
+    class="poster-card"
+    role="button"
+    tabindex="0"
+    [attr.aria-label]="'Play video: ' + cleanTitle()"
+    (click)="openModal()"
+    (keydown.enter)="openModal()"
+    (keydown.space)="$event.preventDefault(); openModal()"
+  >
+    @if (posterUrl() && !posterFailed()) {
+      <img
+        [src]="posterUrl()"
+        [alt]="cleanTitle()"
+        class="poster-img"
+        loading="lazy"
+        decoding="async"
         referrerpolicy="no-referrer"
-        [title]="videoTitle()"
-      ></iframe>
+        (error)="onPosterError()"
+      />
+    } @else {
+      <div class="poster-fallback">
+        <span class="fallback-text">{{ cleanTitle() }}</span>
+      </div>
     }
-  }
+
+    <div class="poster-overlay" aria-hidden="true">
+      <div class="play-btn-circle">
+        <svg class="play-icon" width="20" height="20" viewBox="0 0 24 24" fill="#0B2545" aria-hidden="true">
+          <polygon points="6 3 20 12 6 21 6 3"></polygon>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <div class="video-meta">
+    <h3 class="video-title" [title]="cleanTitle()">{{ cleanTitle() }}</h3>
+  </div>
 </div>
+
+@if (isModalOpen()) {
+  <div
+    class="video-modal-backdrop"
+    role="dialog"
+    aria-modal="true"
+    [attr.aria-label]="cleanTitle()"
+    (click)="closeModal()"
+  >
+    <div
+      class="video-modal-dialog"
+      (click)="$event.stopPropagation()"
+      (keydown)="onDialogKeydown($event)"
+    >
+      <button
+        #closeBtn
+        type="button"
+        class="modal-close-btn"
+        aria-label="Close video player"
+        (click)="closeModal()"
+      >
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+
+      <div class="modal-video-stage">
+        @if (safePlayerUrl()) {
+          <iframe
+            [src]="safePlayerUrl()"
+            class="modal-video-iframe"
+            allow="autoplay; encrypted-media; fullscreen"
+            allowfullscreen
+            referrerpolicy="strict-origin-when-cross-origin"
+            [title]="cleanTitle()"
+          ></iframe>
+        }
+      </div>
+    </div>
+  </div>
+}

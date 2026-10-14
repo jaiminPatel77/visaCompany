@@ -1,15 +1,12 @@
-export default async function handler(req: any, res: any) {
+export default async function handler(req, res) {
   if (req.method !== 'GET') {
     res.setHeader('Allow', 'GET');
     return res.status(405).json({ ok: false, error: 'Method Not Allowed' });
   }
 
-  const upstreamUrl = process.env['APPS_SCRIPT_URL'];
+  const upstreamUrl = process.env.APPS_SCRIPT_URL;
   if (!upstreamUrl) {
-    return res.status(500).json({
-      ok: false,
-      error: 'APPS_SCRIPT_URL not configured',
-    });
+    return res.status(500).json({ ok: false, error: 'APPS_SCRIPT_URL not configured' });
   }
 
   const target = new URL(upstreamUrl);
@@ -30,13 +27,13 @@ export default async function handler(req: any, res: any) {
     const json = await upstreamRes.json();
     res.setHeader('Cache-Control', 'no-store');
     return res.status(200).json(json);
-  } catch (err: any) {
+  } catch (err) {
     clearTimeout(timeoutId);
     res.setHeader('Cache-Control', 'no-store');
     return res.status(502).json({
       ok: false,
       error: 'Upstream health check failed',
-      details: err?.message || String(err),
+      details: err && err.message ? err.message : String(err),
     });
   }
 }
